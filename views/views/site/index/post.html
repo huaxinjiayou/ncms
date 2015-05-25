@@ -1,0 +1,151 @@
+
+<%
+    var oPost = locals.post;
+
+    locals.navType = 'contents';
+    locals.title = oPost.title;
+    locals.keywords = [oPost.title, oPost.pinyin];
+    locals.description = oPost.description || '';
+    locals.js = ['site/index/post'];
+
+    var util = _require('util/util');
+    var string = _require('util/string');
+    var uri = _require('frame/uri');
+
+    var oPost = locals.post;
+    var oBook = locals.book;
+    var oAuthor = locals.author;
+%>
+
+<%- include ../_header.html %>
+
+<div class="hx-content clearfix">
+    <div class="hx-content-left hx-animation">
+        <div class="hx-content-wrap hx-radius">
+            <a href="<%= uri.profile(oAuthor) %>" title="<%= oAuthor.nickname %>" class="hx-profile-avatar-wrap-small hx-article-author-avatar rectangle">
+                <img src="<%= util.avatar(oAuthor) %>" />
+            </a>
+
+            <div class="hx-article-header">
+                <div class="hx-article-title js-content-full title-font">
+                    <h1><%= oPost.title %></h1>
+                </div>
+            </div>
+            <div class="hx-article-header-info hx-normal-link">
+                <span><a href="<%= uri.profile(oAuthor) %>"><%= oAuthor.nickname %></a></span>
+                <span><%= util.dateDic(oPost.createdAt) %></span>
+                <span>发表于<a title="<%= oBook.title %>" href="<%= uri.common('book', oBook) %>">《<%= string.left(oBook.title, 12) %>》</a></span>
+                <span>字数 <%= oPost.words %></span>
+                <span>阅读 <%= locals.viewCount %></span>
+                <span>
+                    <%- partial('/partial/likeLink', {
+                        obj: oPost,
+                        type: 'post',
+                        isLike: locals.isLike,
+                        val: locals.likeCount
+                    }) %>
+                </span>
+                <span>
+                    <%- partial('/partial/collectLink', {
+                        obj: oPost,
+                        type: 'post',
+                        isLike: locals.isCollect,
+                        val: locals.collectCount
+                    }) %>
+                </span>
+                <% if (locals.isAuthor) { %>
+                <span><a href="<%= uri.writerPost('edit', oPost) %>">修改</a></span>
+                <% } %>
+
+                <%- partial('/partial/recommendLink', {
+                    isAdmin: locals.isAdmin,
+                    isRecommend: locals.isRecommend,
+                    objType: 'post',
+                    obj: oPost
+                }) %>
+            </div>
+
+            <div class="hx-article-content hx-content-word">
+                <%- locals.content.content %>
+            </div>
+
+            <% if (!oPost.isOriginal && (oPost.author || oPost.source || oPost.url)) { %>
+            <div class="hx-article-info hx-normal-link" style="border-bottom:none;">
+                <% if (oPost.author) { %>
+                <span>原创: <%= oPost.author %></span>
+                <% } %>
+
+                <% if (oPost.source || oPost.url) { %>
+                <span>
+                    来源:
+                    <% if (oPost.url) { %>
+                        <a href="<%= oPost.url %>" target="_blank"><%= oPost.source || '查看文章来源' %></a>
+                    <% } else { %>
+                        <%= oPost.source %>
+                    <% } %>
+                </span>
+                <% } %>
+            </div>
+            <% } %>
+
+            <div class="hx-content-tab hx-content-tab-2 clearfix">
+                <div class="hx-content-tab-item">
+                    <% if (locals.pre) { %>
+                    <a href="<%= uri.common('post', locals.pre) %>" class="hx-animation" title="<%= locals.pre.title %>">上一篇：<%= string.left(locals.pre.title, 16) %></a>
+                    <% } else { %>
+                    没有上一篇
+                    <% } %>
+                </div>
+                <div class="hx-content-tab-item hx-content-tab-item-border">
+                    <% if (locals.next) { %>
+                    <a href="<%= uri.common('post', locals.next) %>" class="hx-animation" title="<%= locals.next.title %>">下一篇：<%= string.left(locals.next.title, 16) %></a>
+                    <% } else { %>
+                    没有下一篇
+                    <% } %>
+                </div>
+            </div>
+        </div>
+
+        <div class="hx-content-wrap hx-radius">
+            <div class="hx-block-tips-header">
+                <h3>评论</h3>
+            </div>
+            <div class="hx-icontent-body" style="margin-top:0;">
+                <div class="ds-thread" data-thread-key="post_<%= oPost.id %>" data-title="<%= oPost.title %>"></div>
+                <script type="text/javascript">
+                var duoshuoQuery = {short_name:"360duzhe"};
+                (function() {
+                    var ds = document.createElement('script');
+                    ds.type = 'text/javascript';
+                    ds.async = true;
+                    ds.src = 'http://static.duoshuo.com/embed.js';
+                    ds.charset = 'UTF-8';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+                })();
+                </script>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="hx-content-right hx-animation">
+        <%- partial('/partial/userList', {
+                users: locals.liketor.user,
+                times: locals.liketor.time,
+                title: '喜欢这篇文章的用户'
+            })
+        %>
+
+        <%- partial('/partial/postSlideNav', {
+            posts: locals.posts,
+            book: oBook,
+            post: oPost
+        }) %>
+        
+        <%- partial('/partial/joke', {
+            data: locals.joke
+        }) %>
+    </div>
+</div>
+
+<%- include ../_footer.html %>

@@ -1,0 +1,6 @@
+
+<%
+    var nLikeCount = locals.val || 0;
+    var bIsLike = !!locals.isLike;
+%>
+<a href="javascript:void(0);" class="js-like hx-animation <%= locals.extCls || '' %>" data-status="<%= bIsLike ? 1 : 0 %>" data-type="<%= locals.type %>" data-id="<%= locals.obj.id %>" data-count="<%= nLikeCount %>" title="喜欢的话就点下赞吧"><%= bIsLike ? '已赞' : '赞' %> <%= nLikeCount > 0 ? nLikeCount : '' %></a>

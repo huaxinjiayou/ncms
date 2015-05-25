@@ -1,0 +1,75 @@
+<%
+    var oUser = locals.user;
+
+    locals.navType = 'profile';
+    locals.title = oUser.nickname + '的个人中心';
+    locals.description = oUser.description ? oUser.nickname + ': ' + oUser.description : '';
+    locals.js = ['site/profile/index'];
+
+    var sSubNavType = 'password';
+    var util = _require('util/util');
+    var file = _require('util/file');
+    var string = _require('util/string');
+    var uri = _require('frame/uri');
+%>
+
+<%- include ../_header.html %>
+
+<div class="hx-content clearfix hx-content-revert">
+    
+    <div class="clearfix">
+
+        <%- partial('/partial/profileRightNav', {
+            user: locals.user,
+            isSelf: locals.isSelf,
+            navType: sSubNavType,
+            viewCount: locals.viewCount,
+            likeCount: locals.likeCount,
+            isLike: locals.isLike,
+
+            visitors: locals.visitors,
+            visitorTimes: locals.visitorTimes,
+            liketors: locals.liketors,
+            liketorTimes: locals.liketorTimes,
+
+            visitor: locals.visitor,
+            liketor: locals.liketor
+        }) %>
+        
+        <div class="hx-content-left">
+
+            <%- partial('/partial/profileInfoLeftNav', {
+                navType: sSubNavType
+            }) %>
+
+            <div class="hx-mb-20">
+            <form method="post" action="">
+
+                <div class="hx-form-line group" title="请输入原密码">
+                    <label class="label">原密码</label>
+                    <input class="text info-ipt" name="password" type="password" value="" />
+                </div>
+
+                <div class="hx-form-line group" title="请输入新密码">
+                    <label class="label">新密码</label>
+                    <input class="text info-ipt" name="newpwd" type="password" value="" />
+                </div>
+
+                <div class="hx-form-line group" title="请重复输入新密码">
+                    <label class="label">新密码</label>
+                    <input class="text info-ipt" name="repwd" type="password" value="" />
+                </div>
+
+                <div class="hx-form-line">
+                    <button type="submit" class="submit">确认修改密码</button>
+                </div>
+
+            </form>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<%- include ../_footer.html %>

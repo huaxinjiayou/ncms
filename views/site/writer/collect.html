@@ -1,0 +1,74 @@
+
+<%
+    locals.navType = 'profile';
+    locals.js = ['site/profile/collect'];
+    
+    var uri = _require('frame/uri');
+    var util= _require('util/util');
+    var string = _require('util/string');
+
+    var oCollect = locals.collect;
+    var aItem = locals.items;
+    var nCount = aItem.length;
+%>
+
+<%- include ../_header.html %>
+
+<div class="hx-content clearfix">
+
+    <div class="hx-block-tips-header hx-block-tips-header-alone">
+        <h3>
+            <a href="<%= uri.profile(session.user) %>">个人中心</a> .
+            <a href="<%= uri.writerBook('index') %>">管理合集</a> .
+            合集《<%= string.left(oCollect.title, 32) %>》
+        </h3>
+        <div class="hx-extright right">
+            <a href="<%= uri.writerBook('edit', oCollect) %>">修改本合集</a>
+            <a href="<%= uri.common('book', oCollect) %>">查看本合集</a>
+            <a href="<%= uri.writerBook('new', oCollect) %>">新建书籍</a>
+        </div>
+    </div>
+
+    <% if (aItem.length === 0) { %>
+    <div class="hx-content-wrap hx-radius">
+        <div class="txt-center hx-none-tips">
+            <img src="<%= staticUrl('/images/site/none-content.png') %>" style="width:257px;" />
+            <div>
+                暂无数据, <a href="<%= uri.writerBook('new', oCollect) %>">新建书籍</a>
+            </div>
+        </div>
+    </div>
+    <% } else { %>
+    <div class="hx-mb-20">
+        <% aItem.forEach(function (oItem, nIndex) { %>
+        <div data-id="<%= oItem.id %>" class="hx-tr-drag <%= nIndex + 1 === nCount ? 'hx-tr hx-tr-last' : 'hx-tr' %> <%= nIndex % 2 === 0 ? 'hx-tr-even' : '' %> clearfix">
+            <div class="hx-cell hx-cell-drag">
+                <div class="hx-cell-wrap txt-center">
+                    <b class="hx-icon-drag"></b>
+                </div>
+            </div>
+            <div class="hx-cell hx-cell-title">
+                <div class="hx-cell-wrap">
+                    <a href="<%= uri.writerBook('index', oItem) %>"><%= string.left(oItem.title, 32) %></a>
+                </div>
+            </div>
+            <div class="hx-cell hx-cell-count">
+                <div class="hx-cell-wrap"><%= oItem.itemCount %></div>
+            </div>
+            <div class="hx-cell hx-cell-action">
+                <div class="hx-cell-wrap">
+                    <a href="<%= uri.writerBook('edit', oItem) %>">编辑</a> |
+                    <a class="js-del" data-type="book" data-id="<%= oItem.id %>" href="javascript:void(0);">删除</a>
+                </div>
+            </div>
+            <div class="hx-cell hx-cell-date">
+                <div class="hx-cell-wrap"><%= util.date(oItem.createdAt, 'yyyy-MM-dd') %></div>
+            </div>
+        </div>
+        <% }) %>
+    </div>
+    <% } %>
+
+</div>
+
+<%- include ../_footer.html %>

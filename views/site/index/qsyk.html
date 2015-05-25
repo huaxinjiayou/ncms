@@ -1,0 +1,91 @@
+
+<%
+    locals.js = ['site/index/4fun2'];
+    locals.navType = '4fun';
+    locals.keywords = ['轻松一刻'];
+    locals.description = '';
+
+    var string = _require('util/string');
+    var file = _require('util/file');
+    var uri = _require('frame/uri');
+
+    var oData = locals.data;
+    var bOnlyTxt = locals.onlyTxt;
+    var bOnlyImg = locals.onlyImg;
+
+    // 获取图片显示高度
+    var fGetHeight = function (nWidth, sSize) {
+        if (!nWidth || !sSize) {
+            return nWidth;
+        }
+        var aSize = sSize.split('*');
+        return Math.floor(nWidth * aSize[1] / aSize[0]);
+    }
+%>
+<%- include ../_header.html %>
+
+<div class="hx-content clearfix">
+
+    <div class="hx-tab-header hx-tab-header-alone">
+        <a href="<%= uri.common('qing-song-yi-ke') %>" class="hx-tab-header-item <%= !bOnlyTxt && !bOnlyImg ? 'checked' : '' %>">全部</a>
+        <a href="<%= string.addParam(uri.common('qing-song-yi-ke'), {txt: 1}) %>" class="hx-tab-header-item <%= bOnlyTxt ? 'checked' : '' %>">文字</a>
+        <a href="<%= string.addParam(uri.common('qing-song-yi-ke'), {img: 1}) %>" class="hx-tab-header-item <%= bOnlyImg ? 'checked' : '' %>">图文</a>
+        <a href="javascript:void(0);" class="hx-tab-header-item js-add-joke">加一个</a>
+    </div>
+
+    <% if (oData.data.length === 0) { %>
+        <div class="hx-content-wrap hx-radius"><%- partial('/partial/none') %></div>
+    <% } else { %>
+        <div class="hx-fun-container">
+        <% oData.data.forEach(function (oItem, nIndex) { %>
+            <div class="hx-fun-item" style="display:none;">
+                <% if (oItem.imgBak) { %>
+                <div><img data-src="<%= file.getImage('huaxinjiayou', oItem.img, {width: 236, mode: 2}) %>" class="hx-fun-item-img" src="http://mimg.127.net/index/lib/img/loading_s.gif" width="236" height="<%= fGetHeight(236, oItem.imgSize) %>" /></div>
+                <% } %>
+
+                <div class="hx-icontent-body">
+                    <div class="hx-content-word">
+                        <% if (oItem) { %>
+                            <%- oItem.content %>
+                        <% } else { %>
+                        <%- partial('/partial/_none') %>
+                        <% } %>
+                    </div>
+                </div>
+
+                <div class="hx-article-info hx-normal-link">
+                    <% if (oItem.url) { %>
+                    <a href="<%= oItem.url %>"><%= oItem.source || '来源' %></a> 
+                    <% } else if (oItem.source) { %>
+                    <span>来源:<%= oItem.source.trim() %></span> 
+                    <% } %> &nbsp;
+                    <span><a href="<%= string.addParam(uri.common('qing-song-yi-ke'), {jid: oItem.id}) %>" target="_blank">详情</a></span>
+                </div>
+
+                <div class="hx-content-tab hx-content-tab-1 clearfix">
+                    <div class="hx-content-tab-item">
+                        <%- partial('/partial/likeLink', {
+                            obj: oItem,
+                            type: 'joke',
+                            isLike: locals.isLikes[nIndex],
+                            val: locals.likeCounts[nIndex]
+                        }) %>
+                    </div>
+                </div>
+            </div>
+        <% }) %>
+        </div>
+        <div style="display:none;">
+        <%- partial('/partial/pager', {
+                curPage: oData.curPage,
+                totalPage: oData.totalPage,
+                pageName: 'page',
+                baseUrl: locals.baseUrl
+            })
+        %>
+        </div>
+    <% } %>
+
+</div>
+
+<%- include ../_footer.html %>

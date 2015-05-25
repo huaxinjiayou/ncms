@@ -1,0 +1,15 @@
+<%
+    var uri = _require('frame/uri');
+    var sType = locals.type;
+
+    var fCheck = function (sType, sTypeNow) {
+        return sType === sTypeNow ? 'hover' : '';
+    };
+
+%>
+<ul class="hx-common-menu hx-radius">
+    <li><a class="hx-animation hx-common-item <%= fCheck(sType, 'post') %>" href="<%= uri.common('posts') %>">文章</a></li>
+    <li><a class="hx-animation hx-common-item <%= fCheck(sType, 'book') %>" href="<%= uri.common('books') %>">书籍</a></li>
+    <li><a class="hx-animation hx-common-item <%= fCheck(sType, 'collect') %>" href="<%= uri.common('collects') %>">合集</a></li>
+    <li><a class="hx-animation hx-common-item <%= fCheck(sType, 'note') %>" href="<%= uri.common('notes') %>">专题</a></li>
+</ul>

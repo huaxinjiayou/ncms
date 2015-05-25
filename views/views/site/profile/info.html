@@ -1,0 +1,97 @@
+<%
+    var oUser = locals.user;
+
+    locals.navType = 'profile';
+    locals.title = oUser.nickname + '的个人中心';
+    locals.description = oUser.description ? oUser.nickname + ': ' + oUser.description : '';
+    locals.js = ['site/profile/index'];
+
+    var sSubNavType = 'info';
+    var util = _require('util/util');
+    var file = _require('util/file');
+    var string = _require('util/string');
+    var uri = _require('frame/uri');
+%>
+
+<%- include ../_header.html %>
+
+<div class="hx-content clearfix hx-content-revert">
+    
+    <div class="clearfix">
+
+        <%- partial('/partial/profileRightNav', {
+            user: locals.user,
+            isSelf: locals.isSelf,
+            navType: sSubNavType,
+            viewCount: locals.viewCount,
+            likeCount: locals.likeCount,
+            isLike: locals.isLike,
+
+            visitor: locals.visitor,
+            liketor: locals.liketor
+        }) %>
+        
+        <div class="hx-content-left">
+            <%- partial('/partial/profileInfoLeftNav', {
+                navType: sSubNavType
+            }) %>
+
+            <div class="hx-content-wrap hx-radius">
+                <div class="hx-content-tips">
+                    您的<span class="hx-important">头像</span>、<span class="hx-important">昵称</span>和<span class="hx-important">说明</span>可被他人看见，您填写的其他资料 360duzhe 会保密。
+                </div>
+            </div>
+
+            <div class="hx-mb-20">
+            <form method="post" action="">
+                <div class="hx-form-line group" title="邮箱不能更改">
+                    <label class="label">邮箱</label>
+                    <input class="text info-ipt disabled" type="text" value="<%= oUser.email %> (不能更改)" disabled />
+                </div>
+
+                <div class="hx-form-line group" title="头像请点击顶部修改">
+                    <label class="label">头像</label>
+                    <input class="text info-ipt disabled" type="text" value="请点击顶部头像进行修改" disabled>
+                </div>
+
+                <div class="hx-form-line group">
+                    <label class="label">昵称</label>
+                    <input class="text info-ipt" name="nickname" type="text" value="<%= oUser.nickname || oUser.name || '' %>" />
+                </div>
+
+                <div class="hx-form-line group">
+                    <label class="label">QQ</label>
+                    <input class="text info-ipt" name="qq" type="text" value="<%= oUser.qq || '' %>" />
+                </div>
+
+                <div class="hx-form-line group" title="200字以内的简介">
+                    <label class="label">简介</label>
+                    <textarea class="text info-ipt" rows="4" name="description" placeholder="200字以内的简介"><%= oUser.description || '' %></textarea>
+                </div>
+
+                <div class="hx-form-line">
+                    <label class="hx-form-label" title="男">
+                        <input type="radio" name="gender" value="male" <%= oUser.gender === 'female' ? '' : 'checked' %> />男
+                    </label>
+                    <label title="女">
+                        <input type="radio" name="gender" value="female" <%= oUser.gender === 'female' ? 'checked' : '' %> />女
+                    </label>
+                    <label title="保密">
+                        <input type="radio" name="gender" value="unknow" <%= oUser.gender === 'unknow' ? 'checked' : '' %> />保密
+                    </label>
+                </div>
+
+                <div class="hx-form-line">
+                    <button type="submit" class="submit">保存</button>&nbsp;&nbsp;
+                    <button type="reset">重置</button>
+                </div>
+
+            </form>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<%- include ../_footer.html %>

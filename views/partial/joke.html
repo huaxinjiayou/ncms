@@ -1,0 +1,51 @@
+<%
+    var uri = _require('frame/uri');
+    var string = _require('util/string');
+
+    var oData = locals.data || {};
+    var oJoke = oData.joke;
+    var bIsLike = oData.isLike;
+    var nLikeCount = oData.likeCount;
+%>
+
+<% if (oJoke.content) { %>
+<div class="hx-block-tips hx-radius clearfix">
+    <div class="hx-block-tips-header">
+        <h3>轻松一刻</h3>
+        <div class="hx-extright right">
+            <a target="_blank" href="<%= uri.common('qing-song-yi-ke') %>">更多</a>
+        </div>
+    </div>
+    <div class="hx-block-tips-body" id="jokeContent">
+        <%- oJoke.content %>
+    </div>
+
+    <div class="hx-article-info hx-normal-link">
+        <% if (oJoke.source) { %>
+            <% if (oJoke.url) { %>
+            <a href="<%= oJoke.url %>"><%= oJoke.source %></a>
+            <% } else { %>
+            <span>来源:<%= oJoke.source.trim() %></span>
+            <% } %>
+        <% } else { %>
+            <a href="<%= oJoke.url %>">来源</a>
+        <% } %>
+
+        <span><a href="<%= string.addParam(uri.common('qing-song-yi-ke'), {jid: oJoke.id}) %>" target="_blank">详情</a></span>
+    </div>
+
+    <div class="hx-content-tab hx-content-tab-2 clearfix">
+        <div class="hx-content-tab-item">
+            <%- partial('/partial/likeLink', {
+                obj: oJoke,
+                type: 'joke',
+                isLike: bIsLike,
+                likeCount: nLikeCount
+            }) %>
+        </div>
+        <div class="hx-content-tab-item hx-content-tab-item-border">
+            <a href="javascript:void(0);" class="js-add-joke">加一个</a>
+        </div>
+    </div>
+</div>
+<% } %>

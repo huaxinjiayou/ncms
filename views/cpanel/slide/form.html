@@ -1,0 +1,68 @@
+<%
+    locals.js = ['site/common/formphoto'];
+    locals.navType = 'index';
+    
+    var uri = _require('frame/uri');
+    var oItem = locals.slide;
+    var oCover = locals.cover;
+    var bIsEdit = locals.isEdit;
+%>
+<%- include ../_header.html %>
+
+<div class="hx-content clearfix">
+
+    <div class="hx-block-tips-header hx-block-tips-header-alone">
+        <h3>
+            <a href="<%= uri.cpanel('slide') %>">首页轮换</a> . <%= bIsEdit ? '修改' : '新建' %>
+        </h3>
+        <div class="hx-extright right">
+            <a href="<%= uri.cpanel('slide') %>">返回列表</a>
+        </div>
+    </div>
+
+    <form method="post" action="">
+        <div class="hx-form-line group">
+            <label class="label">标题</label>
+            <input class="text" name="title" type="text" value="<%= oItem.content.title || '' %>" />
+        </div>
+
+        <div class="hx-form-line group">
+            <label class="label">链接</label>
+            <input class="text" name="url" type="text" value="<%= oItem.content.url || '' %>" />
+        </div>
+
+        <div class="hx-form-line group">
+            <label class="label">样式</label>
+            <input class="text" name="style" type="text" value="<%= oItem.content.style || '' %>" />
+        </div>
+
+        <%- partial('/partial/formPhoto', {
+                items: oCover,
+                name: 'imageId',
+                photoLimit: 1
+            })
+        %>
+
+        <div class="hx-form-line">
+            <label title="非公开的轮换不会显示">
+                <input type="checkbox" name="isPublish" <%= oItem.isPublish ? 'checked' : '' %> />公开
+            </label>
+        </div>
+
+        <div class="hx-form-line group">
+            <label class="label">描述</label>
+            <textarea rows="8" name="description"><%= oItem.content.description || '' %></textarea>
+        </div>
+
+        <div>
+            <button type="submit" class="submit">保存</button>&nbsp;&nbsp;
+            <% if (!bIsEdit) { %>
+            <button type="submit" name="retain" value="1" class="submit">保存并继续添加</button>&nbsp;&nbsp;
+            <% } %>
+            <button type="reset">重置</button>
+        </div>
+    </form>
+
+</div>
+
+<%- include ../_footer.html %>

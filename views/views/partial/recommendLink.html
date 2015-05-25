@@ -1,0 +1,3 @@
+<% if (locals.isAdmin && locals.obj) { %>
+<a href="javascript:void(0);" class="js-recommend hx-animation <%= locals.extCls %>" data-status="<%= locals.isRecommend ? 1 : 0 %>" data-type="<%= locals.objType %>" data-id="<%= locals.obj.id %>"><%= locals.isRecommend ? '已推荐' : '推荐' %></a>
+<% } %>

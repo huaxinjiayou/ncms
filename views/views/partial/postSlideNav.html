@@ -1,0 +1,59 @@
+<%
+    var uri = _require('frame/uri');
+    var util = _require('util/util');
+    var string = _require('util/string');
+
+    var aPosts = locals.posts || [];
+    var oPost = locals.post;
+    var oBook = locals.book;
+
+    var nPage = 10;
+    var nTotalCount = aPosts.length;
+
+    // 查找当前项
+    var nPostIndex = 0;
+    for (var i = 0; i < nTotalCount; i++) {
+        if (aPosts[i].id === oPost.id) {
+            nPostIndex = i;
+            break; 
+        }
+    }
+%>
+
+<div class="hx-block-tips hx-radius clearfix">
+    <div class="hx-block-tips-header">
+        <h3 class="max-width">所属书籍：
+            <a href="<%= uri.common('book', oBook) %>"><%= string.left(oBook.title, 12) %></a>
+        </h3>
+    </div>
+
+    <% aPosts.forEach(function (oItem, nIndex) { %>
+        <% if (nIndex % nPage === 0) { %>
+        <% if (nIndex !== 0) { %> </ul> <% } %>
+        <ul style="<%= nPostIndex >= nIndex && nPostIndex < nIndex + nPage ? '' : 'display:none;' %>" id="slideNav<%= Math.floor(nIndex / nPage) %>" class="hx-block-tips-body hx-tips-body-no-padding">
+        <% } %>
+
+        <li class="clearfix <% if (nIndex === nPostIndex) { %>checked<% } %>">
+            <a title="<%= oItem.title %>" href="<%= nIndex === nPostIndex ? 'javascript:void(0)' : uri.common('post', oItem) %>">
+                <%= string.left(oItem.title, 12) %>
+            </a>
+            <span><%= oItem.words %>字</span>
+        </li>
+
+        <% if (nIndex + 1 === nTotalCount) { %>
+        </ul>
+        <% } %>
+    <% }) %>
+
+    <% if (nTotalCount > nPostIndex) { %>
+    <%- partial('/partial/pager', {
+            curPage: Math.floor(nPostIndex / nPage),
+            page: util.pageCount(nTotalCount, nPage),
+            interval: 2,
+            getUrl: function () {
+                return 'javascript:void(0);'
+            }
+        })
+    %>
+    <% } %>
+</div>

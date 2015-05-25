@@ -1,0 +1,75 @@
+@media all and (max-width: 640px) {
+  li:first{
+    display: none;
+  }
+}
+
+@media all and (max-width: 1120px) {
+  a.hx-ibanner-left{
+    left: 0;
+  }
+  a.hx-ibanner-right{
+    right: 0;
+  }
+  a.hx-ibanner-img{
+    text-align: center;
+  }
+
+  div.hx-content,
+  div.hx-nav-container,
+  div.hx-ibanner-wrap,
+  div.hx-footer-m,
+  div.hx-ibanner-content,
+  div.hx-content-left,
+  div.hx-content-right,
+  div.hx-fun-content,
+  div.hx-fun-item{
+    width: 100%;
+  }
+  div.hx-footer{
+    height: auto;
+  }
+
+  li.hx-user-card{
+    display: block;
+    float: none;
+    width: auto;
+  }
+  ul.hx-index-books-collection li{
+    text-align: center;
+  }
+
+  li.hx-nav-sign-user,
+  li.hx-nav-sign-cpanel,
+  span.hx-ibanner-shadow,
+  span.hx-ibanner-shadowr,
+  div.hx-index-sort-data,
+  div.hx-footer-m{
+    display: none;
+  }
+  
+  div.hx-fun-txt{
+    width: auto;
+  }
+
+  div.hx-nav{
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  div.hx-fun-body{
+    padding: 80px 10px;
+  }
+
+  div.hx-content,
+  div.hx-fun-content,
+  div.hx-index-banner{
+    width: auto;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+
+  div.hx-sign-box-line input{
+    width: 80%;
+  }
+
+}

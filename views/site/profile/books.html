@@ -1,0 +1,88 @@
+<%
+    var oUser = locals.user;
+
+    locals.navType = 'profile';
+    locals.title = oUser.nickname + '的个人中心';
+    locals.description = oUser.description ? oUser.nickname + ': ' + oUser.description : '';
+    locals.js = ['site/profile/index'];
+
+    var sSubNavType = locals.type;
+    var util = _require('util/util');
+    var file = _require('util/file');
+    var string = _require('util/string');
+    var uri = _require('frame/uri');
+
+    var oData = locals.data;
+    var aCovers = locals.covers;
+
+    var fUrl = function (oItem) {
+        return uri.common(sSubNavType === 'note' ? 'note' : 'book', oItem);
+    };
+%>
+
+<%- include ../_header.html %>
+
+<div class="hx-content clearfix hx-content-revert">
+    
+    <div class="clearfix">
+
+        <%- partial('/partial/profileRightNav', {
+            user: locals.user,
+            isSelf: locals.isSelf,
+            navType: sSubNavType,
+            viewCount: locals.viewCount,
+            likeCount: locals.likeCount,
+            isLike: locals.isLike,
+
+            visitor: locals.visitor,
+            liketor: locals.liketor
+        }) %>
+        
+        <div class="hx-content-left">
+
+            <%- partial('/partial/profileDataLeftNav', {
+                user: locals.user,
+                navType: sSubNavType,
+
+                postCount: locals.postCount,
+                collectCount: locals.collectCount,
+                bookCount: locals.bookCount,
+                noteCount: locals.noteCount
+            }) %>
+
+            <% if (oData.data.length > 0) { %>
+
+            <ul class="hx-collection clearfix hx-books-collection">
+                <% oData.data.forEach(function (oItem, nIndex) { %>
+                    <li>
+                        <div class="hx-collection-block">
+                            <a href="<%= fUrl(oItem) %>" title="<%= oItem.title %>" class="hx-collection-block-cover">
+                                <img src="<%= aCovers[nIndex] ? file.image(aCovers[nIndex], 140, 175) : staticUrl('/images/site/defaultcover.jpg') %>">
+                            </a>
+                            <div class="clearfix">
+                                <span class="right"><%= oItem.itemCount %> <%= sSubNavType === 'collect' ? '本' : '篇' %></span>
+                                <a href="<%= fUrl(oItem) %>" title="<%= oItem.title %>" class="left"><%= string.left(oItem.title, 8) %></a>
+                            </div>
+                        </div>
+                    </li>
+                <% }) %>
+            </ul>
+
+            <%- partial('/partial/pager', {
+                    curPage: oData.curPage,
+                    totalPage: oData.totalPage,
+                    baseUrl: locals.baseUrl,
+                    pageName: 'page'
+                })
+            %>
+            <% } else { %>
+            <%- partial('/partial/none', {
+                hasBorder: true
+            }) %>
+            <% } %>
+        </div>
+    </div>
+
+</div>
+
+<%- include ../_footer.html %>

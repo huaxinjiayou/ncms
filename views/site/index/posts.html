@@ -1,0 +1,108 @@
+
+<%
+    locals.navType = 'contents';
+    locals.keywords = ['文章', '列表'];
+
+    var uri = _require('frame/uri');
+    var string = _require('util/string');
+    var util = _require('util/util');
+
+    var sListType = locals.listType;
+
+    console.log(sListType + '======');
+    var oData = locals.data;
+    var aNewPosts = locals.newPosts;
+    var aItems = oData.data;
+    var oAuthorMap = locals.authorMap;
+    var oBookMap = locals.bookMap;
+%>
+
+<%- include ../_header.html %>
+
+<div class="hx-content clearfix">
+    <div class="hx-content-left">
+
+        <div class="hx-tab-header hx-tab-header-alone">
+            <a href="<%= string.removeParam(locals.baseUrl, 'tag') %>" class="hx-tab-header-item <%= sListType === 'recommend' ? 'checked' : '' %>">推荐</a>
+            <a href="<%= string.addParam(locals.baseUrl, {tag: 'origianl'}) %>" class="hx-tab-header-item <%= sListType === 'origianl' ? 'checked' : '' %>">原创</a>
+            <a href="<%= string.addParam(locals.baseUrl, {tag: 'new'}) %>" class="hx-tab-header-item <%= sListType === 'new' ? 'checked' : '' %>">最新</a>
+        </div>
+
+        <% if (aItems.length > 0) { %>
+            <% aItems.forEach(function (oItem, nIndex) { %>
+            <% var oAuthor = oAuthorMap[oItem.userId] %>
+            <% var oBook = oBookMap[oItem.parentId] %>
+            <div class="hx-content-wrap hx-radius">
+                <div class="hx-list-post">
+                    <a href="<%= uri.profile(oAuthor) %>" title="<%= oAuthor.nickname %>" class="hx-profile-avatar-wrap-small rectangle">
+                        <img src="<%= util.avatar(oAuthor) %>" />
+                    </a>
+                    <a href="<%= uri.common('post', oItem) %>" class="hx-list-post-title title-font" target="_blank"><%= oItem.title %></a>
+
+                    <% if (oItem.description) { %>
+                    <a href="<%= uri.common('post', oItem) %>" class="hx-list-post-description" target="_blank">
+                        <%= oItem.description %>
+                    </a>
+                    <% } %>
+
+                    <div class="hx-list-post-description hx-normal-link">
+                        <span><a href="<%= uri.profile(oAuthor) %>" title="<%= oAuthor.nickname %>"><%= string.left(oAuthor.nickname, 10) %></a></span>
+                        <span><%= util.dateDic(oItem.createdAt) %></span>
+                        <span>发表于<a href="<%= uri.common('book', oBook) %>">《<%= string.left(oBook.title, 12)  %>》</a></span>
+                    </div>
+                </div>
+
+                <div class="hx-content-tab gray clearfix">
+                    <div class="hx-content-tab-item">
+                        字数 <%= oItem.words %>
+                    </div>
+                    <div class="hx-content-tab-item hx-content-tab-item-border">
+                        阅读 <%= locals.viewCounts[nIndex] %>
+                    </div>
+                    <div class="hx-content-tab-item hx-content-tab-item-border">
+                        <%- partial('/partial/likeLink', {
+                            obj: oItem,
+                            type: 'post',
+                            isLike: locals.isLikes[nIndex],
+                            val: locals.likeCounts[nIndex]
+                        }) %>
+                    </div>
+                    <div class="hx-content-tab-item hx-content-tab-item-border">
+                        <%- partial('/partial/collectLink', {
+                            obj: oItem,
+                            type: 'post',
+                            isCollect: false
+                        }) %>
+                    </div>
+                </div>
+            </div>
+            <% }) %>
+
+            <%- partial('/partial/pager', {
+                    curPage: oData.curPage,
+                    totalPage: oData.totalPage,
+                    pageName: 'page',
+                    baseUrl: locals.baseUrl
+                })
+            %>
+
+        <% } else { %>
+            <%- partial('/partial/none', {
+                hasBorder: true
+            }) %>
+        <% } %>
+
+    </div>
+
+    <div class="hx-content-right">
+        <%- partial('/partial/contentRightNav', {
+            type: 'post'
+        }) %>
+
+        <%- partial('/partial/joke', {
+            data: locals.joke
+        }) %>
+    </div>
+</div>
+
+<%- include ../_footer.html %>

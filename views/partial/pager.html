@@ -1,0 +1,50 @@
+<%
+    var string = locals._require('util/string');
+
+    var nCurPage = locals.curPage;
+    var nTotalPage = locals.totalPage;
+    var sBaseUrl = locals.baseUrl;
+    var sPageName = locals.pageName;
+    var fGetUrl = locals.getUrl || function (nIndex) {
+        if (nIndex === nCurPage) {
+            return 'javascript:void(0)';
+        }
+
+        var oParam = {};
+        oParam[sPageName] = nIndex;
+        return string.addParam(sBaseUrl, oParam);
+    };
+
+    var nInterval = locals.interval || 6;
+    var nPageStart = nCurPage - nInterval / 2; // 起始页数
+    nPageStart = nPageStart >= 0 ? nPageStart : 0;
+    var nPageEnd = nPageStart + nInterval > nTotalPage - 1 ? nTotalPage - 1: nPageStart + nInterval; // 终止页数
+    if (nPageEnd  === nTotalPage - 1) {
+        nPageStart = nPageEnd - nInterval >= 0 ? nPageEnd - nInterval : 0;
+    }
+%>
+
+<% if (nTotalPage > 1) { %>
+
+<div class="hx-cpn-pager">
+    <% if (nPageStart > 1) { %>
+    <a href="<%= fGetUrl(0) %>" class="hx-cpn-pager-btn-first" data-index="0">1</a>
+    <a href="javascript:void(0);" class="hx-cpn-pager-btn hx-cpn-pager-dot">...</a>
+    <% } else if (nPageStart > 0) { %>
+    <a href="<%= fGetUrl(0) %>" class="hx-cpn-pager-btn-first" data-index="0">1</a>
+    <% } %>
+
+    <% for (var i = nPageStart; i <= nPageEnd; i++) { %>
+        <a href="<%= fGetUrl(i) %>" class="<%= i === 0 ? 'hx-cpn-pager-btn-first' : i === nTotalPage - 1 ? 'hx-cpn-pager-btn-last' : 'hx-cpn-pager-btn' %> <%= i === nCurPage ? 'hx-cpn-pager-selected' : '' %>" data-index="<%= i %>"><%= i + 1 %></a>
+    <% } %>
+
+    <% if (nPageEnd < nTotalPage - 2) { %>
+    <a href="javascript:void(0);" class="hx-cpn-pager-btn hx-cpn-pager-dot">...</a>
+    <a href="<%= fGetUrl(nTotalPage - 1) %>" class="hx-cpn-pager-btn-last" data-index="<%= nTotalPage - 1 %>"><%= nTotalPage %></a>
+    <% } else if (nPageEnd < nTotalPage - 1) { %>
+    <a href="<%= fGetUrl(nTotalPage - 1) %>" class="hx-cpn-pager-btn-last" data-index="<%= nTotalPage - 1 %>"><%= nTotalPage %></a>
+    <% } %>
+
+</div>
+
+<% } %>

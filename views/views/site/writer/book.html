@@ -1,0 +1,78 @@
+
+<%
+    locals.navType = 'profile';
+    locals.js = ['site/profile/book'];
+    
+    var uri = _require('frame/uri');
+    var util = _require('util/util');
+    var string = _require('util/string');
+
+    var oCollect = locals.collect;
+    var oBook = locals.book;
+    var aItem = locals.items;
+    var nCount = aItem.length;
+%>
+
+<%- include ../_header.html %>
+
+<div class="hx-content clearfix">
+
+    <div class="hx-block-tips-header hx-block-tips-header-alone">
+        <h3>
+            <a href="<%= uri.profile(session.user) %>">个人中心</a> .
+            <a href="<%= uri.writerBook('index') %>">管理合集</a> .
+            <% if (oCollect) { %>
+            <a href="<%= uri.writerBook('index', oCollect) %>">合集《<%= string.left(oCollect.title, 32) %>》</a> .
+            <% } %>
+            书籍《<%= oBook.title %>》
+        </h3>
+        <div class="hx-extright right">
+            <a href="<%= uri.writerBook('edit', oBook) %>">修改本书籍</a>
+            <a href="<%= uri.common('book', oBook) %>">查看本书籍</a>
+            <a href="<%= uri.writerPost('new', oBook) %>">增加文章</a>
+        </div>
+    </div>
+
+    <% if (nCount === 0) { %>
+    <div class="hx-content-wrap hx-radius">
+        <div class="txt-center hx-none-tips">
+            <img src="<%= staticUrl('/images/site/none-content.png') %>" style="width:257px;" />
+            <div>
+                暂无数据, <a href="<%= uri.writerPost('new', oBook) %>">新建文章</a>
+            </div>
+        </div>
+    </div>
+    <% } else { %>
+    <div class="hx-mb-20">
+        <% aItem.forEach(function (oItem, nIndex) { %>
+        <div data-id="<%= oItem.id %>" class="hx-tr-drag <%= nIndex + 1 === nCount ? 'hx-tr hx-tr-last' : 'hx-tr' %> <%= nIndex % 2 === 0 ? 'hx-tr-even' : '' %> clearfix">
+            <div class="hx-cell hx-cell-drag">
+                <div class="hx-cell-wrap txt-center">
+                    <b class="hx-icon-drag"></b>
+                </div>
+            </div>
+            <div class="hx-cell hx-cell-title">
+                <div class="hx-cell-wrap">
+                    <a href="<%= uri.common('post', oItem) %>" target="_blank"><%= string.left(oItem.title, 32) %></a>
+                </div>
+            </div>
+            <div class="hx-cell hx-cell-count">
+                <div class="hx-cell-wrap"><%= oItem.words %></div>
+            </div>
+            <div class="hx-cell hx-cell-action">
+                <div class="hx-cell-wrap">
+                    <a href="<%= uri.writerPost('edit', oItem) %>">编辑</a> |
+                    <a class="js-del" data-type="post" data-id="<%= oItem.id %>" href="javascript:void(0);">删除</a>
+                </div>
+            </div>
+            <div class="hx-cell hx-cell-date">
+                <div class="hx-cell-wrap"><%= util.date(oItem.createdAt, 'yyyy-MM-dd') %></div>
+            </div>
+        </div>
+        <% }) %>
+    </div>
+    <% } %>
+
+</div>
+
+<%- include ../_footer.html %>

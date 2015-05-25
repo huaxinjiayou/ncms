@@ -1,0 +1,41 @@
+<%
+    locals.js = ['site/sign/index'];
+    locals.title = '发送验证邮件';
+%>
+
+<%- include ../_header.html %>
+
+<div class="hx-content clearfix">
+    <div class="hx-content-left">
+        <div class="hx-content-wrap hx-radius">
+
+            <div class="hx-sign-box">
+                <div class="hx-sign-box-header">
+                    <h1>发送验证邮件</h1>
+                </div>
+                <form id="actionForm" action="/sign/send" data-type="send" method="post">
+                    <div class="hx-sign-box-line">
+                        <label>邮箱:</label>
+                        <input id="emailIpt" name="email" type="text" class="text" value="<%= flash.email || '' %>" placeholder="登录邮箱">
+                    </div>
+                    <div class="hx-sign-box-line">
+                        <label>密码:</label>
+                        <input id="passwordIpt" name="password" type="password" class="text" autocapitalize="off" placeholder="登录密码">
+                    </div>
+                    <div class="hx-sign-box-line">
+                        <button class="submit" type="submit">重新发送验证邮件</button>
+                    </div>
+                </form>
+                <div id="signupNote" class="hx-alert-warning hx-sign-box-note">
+                    提示：如果没收到邮件，可能被邮箱误判为垃圾邮件，请到“垃圾邮件”中查找。
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <%- partial('/partial/signRight', {
+        type: 'send'
+    }) %>
+</div>
+
+<%- include ../_footer.html %>

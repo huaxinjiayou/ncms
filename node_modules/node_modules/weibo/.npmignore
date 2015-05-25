@@ -1,0 +1,14 @@
+.git*
+logo.png
+lib-cov/
+examples/
+test/
+support/
+.settings/
+.project
+mkdoc.sh
+Makefile
+gtap
+node_modules
+.travis.yml
+coverage.html

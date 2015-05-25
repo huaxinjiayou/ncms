@@ -1,0 +1,144 @@
+<%
+    locals.navType = 'index';
+    locals.js = ['site/index/index.js'];
+
+    var uri = _require('frame/uri');
+    var util = _require('util/util');
+    var file = _require('util/file');
+    var string = _require('util/string');
+    var aBooks = locals.books;
+    var aBookCovers = locals.bookCovers;
+
+    var aPosts = locals.posts;
+    var nPostCount = aPosts.length;
+    var oPostAuthorMap = locals.postAuthorMap;
+    var oPostBookMap = locals.postBookMap;
+    var aPostViewCounts = locals.postViewCounts;
+    var aPostLikeCounts = locals.postLikeCounts;
+    var aPostIsLikes = locals.postIsLikes;
+%>
+<%- include ../_header.html %>
+<div class="hx-index-banner" id="indexBanner" style="">
+    <div class="hx-ibanner-wrap">
+        <a class="hx-ibanner-btn hx-ibanner-left" hidefocus="true" href="javascript:void(0);"></a>
+        <a class="hx-ibanner-btn hx-ibanner-right" hidefocus="true" href="javascript:void(0);"></a>
+        <div class="hx-ibanner-content">
+            <a hidefocus="true" class="hx-ibanner-img" href="javascript:void(0);">
+                <img src="<%= staticUrl('/images/bg/default-bg.png') %>">
+            </a>
+        </div>
+        <div class="hx-ibanner-note">
+            <div class="hx-ibanner-note-bg"></div>
+            <div class="hx-ibanner-note-body">
+                <div class="hx-ibanner-note-title"></div>
+                <div class="hx-ibanner-note-content"></div>
+            </div>
+            <span class="hx-ibanner-shadow"></span>
+            <span class="hx-ibanner-shadowr"></span>
+        </div>
+    </div>
+</div>
+
+<div class="hx-content clearfix">
+    <div class="hx-content-left">
+        <% if (aBooks.length > 0) { %>
+        <div class="hx-content-wrap hx-radius">
+            <div class="hx-block-tips-header">
+                <h3>推荐的书籍</h3>
+                <div class="hx-extright right">
+                    <a href="<%= uri.common('books') %>">查看全部</a>
+                </div>
+            </div>
+            <div class="hx-icontent-body">
+                <ul class="hx-collection hx-index-books-collection clearfix">
+                    <% aBooks.forEach(function (oItem, nIndex) { %>
+                    <li>
+                        <div class="hx-collection-block">
+                            <a href="<%= uri.common('book', oItem) %>" title="<%= oItem.title %>" class="hx-collection-block-cover" target="_blank">
+                                <img src="<%= aBookCovers[nIndex] ? file.image(aBookCovers[nIndex], 140, 175) : staticUrl('/images/site/defaultcover.jpg') %>" />
+                            </a>
+                            <div class="clearfix">
+                                <span class="right"><%= oItem.itemCount %> <%= oItem.isEnd ? '篇' : '本' %></span>
+                                <a href="<%= uri.common('book', oItem) %>" title="<%= oItem.title %>" class="left" target="_blank"><%= string.left(oItem.title, 12) %></a>
+                            </div>
+                        </div>
+                    </li>
+                    <% }) %>
+                </ul>
+            </div>
+        </div>
+        <% } %>
+
+        <% if (nPostCount > 0) { %>
+        <div class="hx-content-wrap hx-radius">
+            <div class="hx-block-tips-header">
+                <h3>推荐的文章</h3>
+                <div class="hx-extright right">
+                    <a href="<%= uri.common('posts') %>">查看全部</a>
+                </div>
+            </div>
+            <div class="hx-icontent-body">
+            <% aPosts.forEach(function (oItem, nIndex) { %>
+            <% var oAuthor = oPostAuthorMap[oItem.userId] %>
+            <% var oBook = oPostBookMap[oItem.parentId] %>
+            <div class="hx-content-inner-wrap <%= nIndex + 1 === nPostCount ? 'last' : '' %>">
+                <div class="hx-list-post">
+                    <a href="<%= uri.profile(oAuthor) %>" title="<%= oAuthor.nickname %>" class="hx-profile-avatar-wrap-small rectangle" target="_blank">
+                        <img src="<%= util.avatar(oAuthor) %>" />
+                    </a>
+                    <a href="<%= uri.common('post', oItem) %>" class="hx-list-post-title title-font" target="_blank"><%= oItem.title %></a>
+
+                    <% if (oItem.description) { %>
+                    <a href="<%= uri.common('post', oItem) %>" class="hx-list-post-description" target="_blank">
+                        <%= oItem.description %>
+                    </a>
+                    <% } %>
+
+                    <div class="hx-list-post-description hx-normal-link">
+                        <span><a href="<%= uri.profile(oAuthor) %>" title="<%= oAuthor.nickname %>"><%= string.left(oAuthor.nickname, 10) %></a></span>
+                        <span><%= util.dateDic(oItem.createdAt) %></span>
+                        <span>发表于<a href="<%= uri.common('book', oBook) %>">《<%= string.left(oBook.title, 12)  %>》</a></span>
+                        <span>字数 <%= oItem.words %></span>
+                        <span>阅读 <%= aPostViewCounts[nIndex] %></span>
+                        <span>
+                        <%- partial('/partial/likeLink', {
+                            obj: oItem,
+                            type: 'post',
+                            isLike: aPostIsLikes[nIndex],
+                            val: aPostLikeCounts[nIndex]
+                        }) %>
+                        </span>
+                        <span>
+                        <%- partial('/partial/collectLink', {
+                            obj: oItem,
+                            type: 'post',
+                            isCollect: false
+                        }) %>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <% }) %>
+            </div>
+        </div>
+        <% } %>
+
+    </div>
+    <div class="hx-content-right">
+        <%- partial('/partial/joke', {
+            data: locals.joke
+        }) %>
+
+        <%- partial('/partial/userList', {
+                users: locals.newUsers,
+                times: locals.newUserTimes,
+                title: '欢迎新用户'
+            })
+        %>
+    </div>
+</div>
+
+<script type="text/javascript">
+window.aSlide = <%- locals.slide %>;
+</script>
+<%- include ../_footer.html %>

@@ -1,0 +1,411 @@
+form *{
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+input, button, a {
+    outline: none;
+}
+a{
+    cursor: pointer;
+    color: #3584c8;
+    text-decoration: none;
+    -webkit-text-shadow: none;
+    text-shadow: none;
+}
+a:hover{
+    color: #c30;
+    text-decoration:none;
+}
+
+.left{
+    float: left;
+}
+.right{
+    float: right;
+}
+.txt-center{
+    text-align: center;
+}
+.txt-hide{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+html{
+    background: url(/images/bg/default-bg.png) repeat 0 0 #f4f4f4;
+}
+body{
+    overflow: hidden;
+    font-size: 12px;
+    font-family: Georgia, "Times New Roman", Times, "Songti SC", "SimSun", serif;
+    background: url(/images/bg/default-bg.png) repeat 0 0 #f4f4f4;
+}
+body.fun-page{
+    background: url(/images/site/bg-fun.jpg) #acbea8 no-repeat top center;
+    background-attachment: fixed;
+}
+body.coming-soon, body.sign-page{
+    background: url(/images/site/sign/automn_grass.jpg) repeat top center;
+    background-attachment: fixed;
+}
+body.fun-page div.hx-fun-content, body.coming-soon div.hx-fun-content, body.sign-page div.hx-content{
+    filter:alpha(opacity=90);
+    opacity: 0.9;
+}
+
+/*警告相关*/
+.hx-alert-warning{
+    background-color: #f8f8f8;
+    border: 1px solid #d3d3d3;
+}
+
+.hx-alert-tips{
+    background-color: #fcf8e3;
+    border: 1px solid #faebcc;
+}
+
+.hx-noshadow{
+    -webkit-text-shadow: none;
+    text-shadow: none;
+}
+.hx-important{
+    font-weight: bold;
+    color: #1f86ce;
+}
+.hx-radius{
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    -webkit-box-shadow: 0 0 7px rgba(200,200,200,0.5);
+    -moz-box-shadow: 0 0 7px rgba(200,200,200,0.5);
+    box-shadow: 0 0 7px rgba(200,200,200,0.5);
+}
+
+.hx-note{
+    display: none;
+    line-height: 20px;
+    text-align: center;
+    background-color: #fcf8e3;
+    border-bottom: 1px solid #faebcc;
+}
+.hx-note-container{
+    padding: 5px 0;
+}
+.hx-note-container a{
+    font-weight: bold;
+    display: inline-block;
+    padding: 0 5px;
+}
+.hx-note-container a:hover{
+    background-color: #3584c8;
+    color: #fff;
+}
+/*导航栏*/
+.hx-nav{
+    height: 42px;
+    z-index: 200;
+    background: url(/images/site/nav-border.png) #fff left bottom repeat-x;
+}
+.hx-nav-container{
+    position: relative;
+    margin: 0 20px;
+}
+.hx-nav-container h1{
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 2px;
+    background: url(/images/site/logo.png) no-repeat;
+    width: 96px;
+    height: 37px;
+}
+.hx-nav-container h1 a{
+    height: 100%;
+    display: block;
+    text-indent: -9999px;
+}
+.hx-nav-list{
+    margin-left: 130px;
+    padding: 0;
+}
+.hx-nav-list li{
+    float: left;
+    height: 42px;
+}
+.hx-nav-list li a{
+    padding: 0 15px;
+    text-align: center;
+    display: inline-block;
+    height: 40px;
+    overflow: hidden;
+    line-height: 42px;
+    color: #666;
+    text-decoration: none;
+}
+.hx-nav-list li a:hover{
+    text-decoration: none;
+    color: #c30;
+}
+.hx-nav-list li.hx-nav-active a{
+    background: #f8f8f8;
+}
+.hx-nav-list li.hx-nav-active a:hover{
+    color: #666;
+}
+.hx-nav-sign{
+    position: absolute;
+    right: 0;
+    top: 5px;
+}
+.hx-nav-sign li{
+    float: left;
+    margin-left: 15px;
+    position: relative;
+}
+.hx-nav-sign li a{
+    display: block;
+    padding: 7px 0;
+    color: #666;
+}
+.hx-nav-sign li a:hover{
+    color: #c30;
+}
+
+/*内容块*/
+.hx-content{
+    position: relative;
+}
+.hx-content-part{
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: 100%;
+    background: #fff;
+}
+.hx-content-notebook{
+    width: 200px;
+    border-right: 1px solid #d3d3d3;
+}
+.hx-content-list{
+    width: 300px;
+    border-right: 1px solid #d3d3d3;
+}
+.hx-content-main{
+    width: 100%;
+    margin-left: -502px;
+}
+.hx-content-main-body{
+    margin-left: 502px;
+}
+
+/*笔记本区域*/
+.hx-notebook-head{
+    padding: 0;
+    height: 36px;
+    line-height: 36px;
+    text-align: center;
+    border-bottom: 1px solid #d3d3d3;
+    background: #f8f8f8;
+    margin-bottom: -11px;
+}
+.hx-notebook-head a{
+    display: block;
+    text-align: center;
+    width: 49%;
+}
+.hx-notebook-head a.right{
+    border-left: 1px solid #d3d3d3;
+}
+.hx-notecollect{
+    border: 1px solid #d9d9d9;
+    border-right: none;
+    margin-top: 10px;
+}
+.hx-notebook{
+    border-left: 1px solid #d9d9d9;
+    border-bottom: 1px solid #d9d9d9;
+    margin-left: 10px;
+}
+.hx-notebook-name{
+    padding: 1px 5px;
+    display: block;
+    max-width: 180px;
+    _width: 170px;
+    height: 36px;
+    line-height: 36px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.hx-notebook-action{
+    padding: 1px 5px;
+    border-top: 1px dotted #d3d3d3;
+    background: #f8f8f8;
+}
+.hx-notebook-action a{
+    display: block;
+    float: left;
+    margin-right: 10px;
+}
+.hx-notecollect{
+    margin-left: 0;
+}
+
+/*文章区域*/
+.hx-post-head{
+    padding: 0;
+    height: 36px;
+    line-height: 36px;
+    text-align: center;
+    border-bottom: 1px solid #d3d3d3;
+    background: #f8f8f8;
+}
+.hx-post-head a{
+    text-align: center;
+    display: block;
+}
+
+.hx-post{
+    border-bottom: 1px solid #d9d9d9;
+}
+.hx-post-name{
+    padding: 1px 5px;
+    display: block;
+    max-width: 280px;
+    _width: 270px;
+    height: 36px;
+    line-height: 36px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.hx-post-action{
+    padding: 1px 5px;
+    border-top: 1px dotted #d3d3d3;
+    background: #f8f8f8;
+}
+.hx-post-action a{
+    display: block;
+    float: left;
+    margin-right: 10px;
+}
+
+/*编辑区域*/
+.hx-form{
+    padding: 5px;
+}
+.hx-form-head{
+    border-color: #d3d3d3;
+    margin-bottom: 20px;
+}
+.hx-form-line{
+    position: relative;
+    margin: 0 0 20px;
+}
+.hx-form-line input.text, .hx-form-line textarea{
+    width: 100%;
+}
+.hx-form-line.group input.text, .hx-form-line.group textarea{
+    padding-left: 60px;
+}
+.hx-form-line.group .label{
+    position: absolute;
+    top: 7px;
+    display: block;
+    width: 45px;
+    text-align: right;
+    color: #999;
+}
+.hx-form-label{
+    vertical-align: top;
+}
+.hx-form-well{
+    padding: 10px;
+    margin-bottom: 20px;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+.hx-form-tips{
+    margin: 0 0 10px;
+    color: #999;
+}
+
+
+
+/*表单元素*/
+input.text, textarea{
+    font-size: 12px;
+    padding: 8px;
+    background: #fff;
+    border: 1px solid #ccc;
+    outline: none;
+    z-index: 2;
+    vertical-align: middle;
+
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+}
+textarea{
+    overflow: auto;
+}
+input.text:focus, textarea:focus{
+    -webkit-transition: all .15s ease-in;
+    -moz-transition: all .15s ease-in;
+    -o-transition: all .15s ease-in;
+    transition: all .15s ease-in;
+    -webkit-transition-property: all;
+    -moz-transition-property: all;
+    -o-transition-property: all;
+    transition-property: all;
+    outline: 0;
+    border-color: #51a7e8;
+    -webkit-box-shadow: inset 0 1px 2px rgba(0,0,0,0.075),0 0 5px rgba(81,167,232,0.5);
+    -moz-box-shadow: inset 0 1px 2px rgba(0,0,0,0.075),0 0 5px rgba(81,167,232,0.5);
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.075),0 0 5px rgba(81,167,232,0.5);
+}
+input.text.error, textarea.error{
+    color: #b94a48;
+    border: 1px solid red;
+    background: #eed3d7;
+}
+button{
+    color: #000;
+    display: inline-block;
+    background-color: #fff;
+    margin-bottom: 0;
+    font-weight: 400;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    background-image: none;
+    border: 1px solid transparent;
+    border-color: #d3d3d3;
+    white-space: nowrap;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+button:hover{
+    background-color: #dddddd;
+}
+button.submit{
+    color: #fff;
+    background-color: #428bca;
+    border-color: #357ebd;
+}
+button.submit:hover{
+    color: #fff;
+    background-color: #3276b1;
+    border-color: #285e8e;
+}

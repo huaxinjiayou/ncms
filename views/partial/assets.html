@@ -1,0 +1,17 @@
+<%
+    var util = _require('util/util');
+    var aCss = util.isArray(locals.css) ? locals.css : [locals.css];
+    var aJs = util.isArray(locals.js) ? locals.js : [locals.js];
+%>
+
+<% aCss.forEach(function (sCss) { if (!sCss || sCss.trim() === '') return; sCss = sCss.replace(/.css$/, ''); %>
+    <link rel="stylesheet" href="/stylesheets/<%= sCss %>.css" media="all" />
+<% }) %>
+
+<% if (aJs.length > 0) { %>
+<script type="text/javascript">
+<% aJs.forEach(function (sJs) { if (!sJs || sJs.trim() === '') return; sJs = sJs.replace(/.js$/, ''); %>
+    seajs.use('<%= sJs %>');
+<% }) %>
+</script>
+<% } %>

@@ -1,0 +1,114 @@
+<%
+    var oUser = locals.user;
+
+    locals.navType = 'profile';
+    locals.title = oUser.nickname + '的个人中心';
+    locals.description = oUser.description ? oUser.nickname + ': ' + oUser.description : '';
+    locals.js = ['site/profile/index'];
+
+    var sSubNavType = 'post';
+    var util = _require('util/util');
+    var file = _require('util/file');
+    var string = _require('util/string');
+    var uri = _require('frame/uri');
+
+    var oPosts = locals.posts;
+%>
+
+<%- include ../_header.html %>
+
+<div class="hx-content clearfix hx-content-revert">
+    
+    <div class="clearfix">
+
+        <%- partial('/partial/profileRightNav', {
+            user: locals.user,
+            isSelf: locals.isSelf,
+            navType: sSubNavType,
+            viewCount: locals.viewCount,
+            likeCount: locals.likeCount,
+            isLike: locals.isLike,
+
+            visitor: locals.visitor,
+            liketor: locals.liketor
+        }) %>
+        
+        <div class="hx-content-left">
+
+            <%- partial('/partial/profileDataLeftNav', {
+                user: locals.user,
+                navType: sSubNavType,
+
+                postCount: locals.postCount,
+                collectCount: locals.collectCount,
+                bookCount: locals.bookCount,
+                noteCount: locals.noteCount
+            }) %>
+
+            <% if (oPosts.data.length > 0) { %>
+
+            <% oPosts.data.forEach(function (oItem, nIndex) { %>
+            <div class="hx-content-wrap hx-radius">
+                <div class="hx-list-post">
+                    <a href="<%= uri.profile(oUser) %>" title="<%= oUser.nickname %>" class="hx-profile-avatar-wrap-small rectangle">
+                        <img src="<%= util.avatar(oUser) %>" />
+                    </a>
+                    <a href="<%= uri.common('post', oItem) %>" class="hx-list-post-title title-font" target="_blank"><%= oItem.title %></a>
+
+                    <% if (oItem.description) { %>
+                    <a href="<%= uri.common('post', oItem) %>" class="hx-list-post-description" target="_blank">
+                        <%= oItem.description %>
+                    </a>
+                    <% } %>
+
+                    <div class="hx-list-post-description hx-normal-link">
+                        <span><a href="<%= uri.profile(oUser) %>" title="<%= oUser.nickname %>"><%= string.left(oUser.nickname, 10) %></a></span>
+                        <span><%= util.dateDic(oItem.createdAt) %></span>
+                        <span>发表于<a href="<%= uri.common('book', oItem.book) %>">《<%= string.left(oItem.book.title, 12)  %>》</a></span>
+                    </div>
+                </div>
+
+                <div class="hx-content-tab gray clearfix">
+                    <div class="hx-content-tab-item">
+                        字数 <%= oItem.words %>
+                    </div>
+                    <div class="hx-content-tab-item hx-content-tab-item-border">
+                        阅读 <%= locals.viewCounts[nIndex] %>
+                    </div>
+                    <div class="hx-content-tab-item hx-content-tab-item-border">
+                        <%- partial('/partial/likeLink', {
+                            obj: oItem,
+                            type: 'post',
+                            isLike: locals.isLikes[nIndex],
+                            val: locals.likeCounts[nIndex]
+                        }) %>
+                    </div>
+                    <div class="hx-content-tab-item hx-content-tab-item-border">
+                        <%- partial('/partial/collectLink', {
+                            obj: oItem,
+                            type: 'post',
+                            isCollect: false
+                        }) %>
+                    </div>
+                </div>
+            </div>
+            <% }) %>
+
+            <%- partial('/partial/pager', {
+                    curPage: oPosts.curPage,
+                    totalPage: oPosts.totalPage,
+                    baseUrl: locals.baseUrl,
+                    pageName: 'page'
+                })
+            %>
+            <% } else { %>
+            <%- partial('/partial/none', {
+                hasBorder: true
+            }) %>
+            <% } %>
+        </div>
+    </div>
+
+</div>
+
+<%- include ../_footer.html %>

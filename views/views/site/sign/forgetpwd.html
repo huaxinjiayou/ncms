@@ -1,0 +1,37 @@
+<%
+    locals.js = ['site/sign/index'];
+    locals.title = '找回密码';
+%>
+
+<%- include ../_header.html %>
+
+<div class="hx-content clearfix">
+    <div class="hx-content-left">
+        <div class="hx-content-wrap hx-radius">
+
+            <div class="hx-sign-box">
+                <div class="hx-sign-box-header">
+                    <h1>找回密码</h1>
+                </div>
+                <form id="actionForm" action="/sign/forgetpwd" data-type="forgetpwd" method="post">
+                    <div class="hx-sign-box-line">
+                        <label>邮箱:</label>
+                        <input id="emailIpt" name="email" type="text" class="text" value="<%= flash.email || '' %>" placeholder="注册邮箱">
+                    </div>
+                    <div class="hx-sign-box-line">
+                        <button class="submit" type="submit">发送找回密码邮件</button>
+                    </div>
+                </form>
+                <div id="signupNote" class="hx-alert-warning hx-sign-box-note">
+                    提示：仔细想想，说不定还能记起来吖。
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <%- partial('/partial/signRight', {
+        type: 'forgetPwd'
+    }) %>
+</div>
+
+<%- include ../_footer.html %>

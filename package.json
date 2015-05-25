@@ -1,0 +1,53 @@
+{
+    "name": "360duzhe",
+    "version": "0.0.1",
+    "private": true,
+    "scripts": {
+        "start": "node app.js"
+    },
+    "dependencies": {
+        "express"           : "*",
+        "body-parser"       : "*",
+        "compression"       : "*",
+        "cookie-session"    : "*",
+        "morgan"            : "*",
+        "cookie-parser"     : "*",
+        "express-session"   : "*",
+        "serve-favicon"     : "*",
+        "response-time"     : "*",
+        "errorhandler"      : "*",
+        "method-override"   : "*",
+        "connect-timeout"   : "*",
+        "vhost"             : "*",
+        "csurf"             : "*",
+        "ejs"               : "*",
+        "connect-flash"     : "*",
+        "connect-redis"     : "*",
+        "connect-multiparty": "*",
+        "express-partials"  : "*",
+
+        "underscore"        : "*",
+        "validator"         : "*",
+        "nodemailer"        : "*",
+        "glob"              : "*",
+        "mysql"             : "*",
+        "redis"             : "*",
+        "sequelize"         : "*",
+        "eventproxy"        : "*",
+
+        "qn"                : "*",
+        "weibo"             : "*",
+        "marked"            : "*",
+        "to-markdown"       : "*",
+        "wind"              : "*",
+
+        "xmldom"            : "*",
+        "urllib"            : "*",
+        "jquery"            : "*",
+        "jsdom"             : "*",
+
+        "mocha"             : "*",
+        "should"            : "*",
+        "supertest"         : "*"
+    }
+}

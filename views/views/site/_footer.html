@@ -1,0 +1,54 @@
+
+        <div class="hx-footer">
+            <div class="hx-footer-m">
+                <a class="hx-footer-notice" href="/about/join.html">
+                    <span class="hx-footer-head">创作达人招募计划</span><br>
+                    <span class="hx-footer-content">与我们共同成长</span>
+                </a>
+
+                <div class="hx-footer-copy">
+                    <p>
+                        <a href="/post/1970/guan-yu-wo-men.html">关于我们</a><span> -</span>
+                        <a href="/post/1971/lian-xi-wo-men.html">联系我们</a><span> -</span>
+                        <a href="/post/1971/lian-xi-wo-men.html">意见和建议</a>
+                    </p>
+                    <p>Copyright © 2010-2015 360duzhe.com. 保留所有权利</p>
+                </div>
+
+                <div class="hx-footer-fback">
+                    <a href="/post/1971/lian-xi-wo-men.html" hidefocus="true">
+                        <i class="hx-icon hx-icon-fback"></i>意见反馈
+                    </a>
+                    <a href="http://weibo.com/huaxin1989" target="_blank">新浪微博</a>
+                </div>
+            </div>
+            <div class="hx-footer-source">本站所有内容均来自<i>网站注册成员创作 或 互联网站点所提供的公开引用资源</i></div>
+            <div class="hx-footer-border"></div>
+        </div>
+        </div>
+
+        <script type="text/javascript" src="/javascripts/lib/sea.js"></script>
+        <script type="text/javascript" src="/javascripts/core/seaConfig.js"></script>
+        <script type="text/javascript">
+            window.globalData = {
+                profileId: <%- session.user ? session.user.id : "''" %>,
+                userId: <%- locals.userId ? locals.userId : "''" %>,
+                isAdmin: <%- session.user && session.user.isAdmin ? "true" : "false" %>,
+                note: <%- "'" + (flash.note || '') + "'" %>,
+                error: <%- "'" + (flash.error || '') + "'" %>
+            };
+
+            <% if (locals.upToken) { %>
+            window.upToken = '<%- locals.upToken %>';
+            <% } %>
+            
+            seajs.use('site/common/common');
+        </script>
+
+        <%- partial('/partial/assets', {
+                js: locals.js
+            })
+        %>
+        <%- partial('/partial/analytics') %>
+    </body>
+</html>
