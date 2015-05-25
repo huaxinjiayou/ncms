@@ -1,7 +1,0 @@
-
-<%
-    var nCollectCount = locals.val || 0;
-    var bIsCollect = !!locals.isCollect;
-%>
-
-<a href="javascript:void(0);" class="js-collect hx-animation" data-status="<%= bIsCollect ? 1 : 0 %>" data-type="<%= locals.type %>" data-id="<%= locals.obj.id %>" data-count="<%= nCollectCount %>"><%= bIsCollect ? '已收藏' : '收藏' %> <%= nCollectCount > 0 ? nCollectCount : '' %></a>
