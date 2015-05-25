@@ -19,8 +19,6 @@ cd ${WEBAPPPATH}
 
 # 移动开发文件
 echo "移动开发文件"
-mkdir "${PUBLISHPATH}/${PUBLISHNAME}/public"
-mkdir "${PUBLISHPATH}/${PUBLISHNAME}/sh"
 cp -rf "${WEBAPPPATH}/controllers" "${PUBLISHPATH}/${PUBLISHNAME}/controllers"
 cp -rf "${WEBAPPPATH}/filters" "${PUBLISHPATH}/${PUBLISHNAME}/filters"
 cp -rf "${WEBAPPPATH}/frame" "${PUBLISHPATH}/${PUBLISHNAME}/frame"
